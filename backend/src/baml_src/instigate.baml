@@ -12,7 +12,7 @@ function ExtractInstigation(messages: string) -> MessageOutput {
     "I personally wouldn't let that slide" or "Yo, you gonna take that?", or something in a gen z type of way, make it BRAIN ROT.
     Here are the messages 
     {{messages}}
-    Friend z: [what you need to fill in] JSON ONLY. 
+    Friend z: [what you need to fill in] JSON ONLY. Don't include their names in the response. Don't be afriad to be vulgar and out of pocket.
     
     Try to make it funny and in a gen z type of way and SPECIFIC to the conversation.
     {{ ctx.output_format }}
