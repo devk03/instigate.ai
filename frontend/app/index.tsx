@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
+import InstigateButton from "../instigate_components/instigate_button";
 
 export default function Index() {
 
@@ -46,6 +47,8 @@ export default function Index() {
         <View style={[styles.chatBubble, { transform: [{ rotate: '-3deg' }] }]}>
           <Text style={styles.chatText}>he got yo goofy ahh good 😂😂</Text>
         </View>
+        <Text>Edit app/index.tsx to edit this screen.</Text>
+        <InstigateButton message="1: humanities have a higher creative ceiling, 2: shut the fuck up" />
       </View>
     </LinearGradient>
   );
