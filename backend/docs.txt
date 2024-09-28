@@ -1,2 +1,11 @@
 fastapi dev main.py - run command
-uvicorn main:app --host 0.0.0.0 --port 8080 -- manual port setting run commmand
+--------------------------------------------------------------------------------------
+instigate.ai/backend on  development [?] via 🐍 v3.12.6 (env) on ☁️  (us-east-2) took 26s 
+❯ uvicorn main:app --reload --host 0.0.0.0 --port 8080
+INFO:     Will watch for changes in these directories: ['/Users/devk/Developer/instigate.ai/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+INFO:     Started reloader process [29696] using WatchFiles
+INFO:     Started server process [29699]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61498 - "POST /instigate HTTP/1.1" 200 OK
