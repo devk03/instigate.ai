@@ -1,6 +1,6 @@
 // Defining a data model.
 class MessageOutput {
-  message string
+  message string @description("2 Sentences max")
 }
 
 // Creating a function to extract the resume from a string.
@@ -18,6 +18,7 @@ function ExtractInstigation(messages: string) -> MessageOutput {
     {{ ctx.output_format }}
   "#
 }
+
 
 // Testing the function with a sample resume.
 test testRoast {

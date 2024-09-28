@@ -1,8 +1,10 @@
 # Standard imports
-from typing import Union
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, UploadFile, File
 from dotenv import load_dotenv
-import os
+import pytesseract
+from PIL import Image
+import io
+
 
 app = FastAPI()
 load_dotenv()
@@ -16,7 +18,7 @@ def read_root():
     return {"Test": "Route"}
 
 
-@app.post("/instigate")
+@app.post("/instigate_text")
 async def chat(request: Request):
     """
     Instigates a response from the LLM
@@ -24,4 +26,22 @@ async def chat(request: Request):
     body = await request.json()
     message = body["message"]
     response = instigate(message)
+    return response
+
+
+@app.post("/instigate_image")
+async def image_chat(file: UploadFile = File(...)):
+    """
+    Instigates a response from the LLM based on uploaded image
+    """
+
+    contents = await file.read()
+    image = Image.open(io.BytesIO(contents))
+
+    # Perform OCR
+    text = str(pytesseract.image_to_string(image))
+
+    # Generate instigation based on extracted text
+    response = instigate(text)
+
     return response
