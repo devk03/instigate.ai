@@ -52,7 +52,7 @@ const IntroPageImages = () => {
           <Text style={styles.chatText}>he got yo goofy ahh good 😂😂</Text>
         </View>
       </View>
-      <Text style={styles.subTitle}>Upload a screenshot of a chat to start instigating</Text>
+      <Text style={styles.subTitle}>Let's create chaos.</Text>
     </View>
   );
 };
@@ -74,8 +74,7 @@ export default function Index() {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
+        allowsEditing: false,
         quality: 1,
       });
 
@@ -98,7 +97,7 @@ export default function Index() {
 
   return (
     <LinearGradient
-      colors={['#DC2913', '#F5B9B1']}
+      colors={['#DC2913', '#DC5913']}
       style={styles.container}
     >
       <View style={styles.topSection}>
@@ -111,7 +110,9 @@ export default function Index() {
           {isLoading ? (
             <ActivityIndicator size="large" color="#FFFFFF" />
           ) : instigationResult ? (
-            <Text style={styles.instigationText}>{instigationResult}</Text>
+            <View style={styles.instigationContainer}>
+              <Text style={styles.instigationText}>{instigationResult}</Text>
+            </View>
           ) : null}
         </View>
       ) : (
@@ -137,7 +138,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   appName: {
-    fontSize: 40,
+    fontSize: 50,
+    marginTop: 100,
     color: 'white',
     fontFamily: 'Jua',
     textAlign: 'center',
@@ -147,32 +149,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    marginVertical: 50
   },
   subTitle: {
     width: '90%',
-    fontSize: 24,
+    fontSize: 28,
     color: 'white',
+    fontWeight: 'bold',
     textAlign: 'center',
-    fontFamily: 'Jua',
-    marginBottom: 20,
+    marginTop: 40,
   },
   bubblesContainer: {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    marginTop: 30,
+    marginVertical: 30,
   },
   backgroundImage: {
     width: width * 0.8,
-    height: width * 0.6,
+    height: width * 0.7,
     position: 'absolute',
     top: 0,
     resizeMode: 'cover',
-    opacity: 0.6,
+    opacity: 0.5,
   },
   chatBubble: {
-    backgroundColor: '#FF5A5F',
+    backgroundColor: '#FFFFFF',
     padding: 15,
     borderRadius: 20,
     marginVertical: 15,
@@ -185,27 +188,25 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   chatText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
-    fontFamily: 'Jua',
     textAlign: 'center',
   },
   uploadedImage: {
     width: width * 0.8,
     height: width * 0.8,
-    borderRadius: 10,
+    borderRadius: 45,
     resizeMode: 'contain',
   },
   uploadButton: {
-    backgroundColor: '#FF5A5F',
+    backgroundColor: '#000000',
     padding: 15,
-    borderRadius: 20,
-    marginBottom: 20,
+    borderRadius: 25,
+    marginBottom: 150,
   },
   uploadButtonText: {
     color: 'white',
-    fontSize: 18,
-    fontFamily: 'Jua',
+    fontSize: 25,
     textAlign: 'center',
   },
   resultContainer: {
@@ -214,13 +215,18 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   instigationText: {
-    color: 'white',
+    color: 'black',
     fontSize: 18,
-    fontFamily: 'Jua',
     textAlign: 'center',
-    marginTop: 20,
     padding: 10,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    borderRadius: 10,
+
+  },
+  instigationContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.8,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    marginVertical: 20,
   },
 });
