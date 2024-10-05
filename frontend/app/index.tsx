@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity, ActivityIndicator, Alert, Clipboard } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import * as ImagePicker from 'expo-image-picker';
 import Feather from 'react-native-vector-icons/Feather';
-
+import Icon from 'react-native-vector-icons/Feather';
 
 const { width } = Dimensions.get('window');
 const API_ADDR = "http://0.0.0.0:8080";
+
 export const fetchInstigation = async (imageUri: any) => {
   const API_URL = `${API_ADDR}/instigate_image`;
 
@@ -103,6 +104,11 @@ export default function Index() {
       setInstigationResult(instigation);
     } else if (error) {
       Alert.alert("Error", error);
+  }
+  const copyToClipboard = () => {
+    if (instigationResult) {
+      Clipboard.setString(instigationResult);
+      Alert.alert('Copied!', 'Paste your instigation to create chaos 😈');
     }
   };
 
@@ -119,15 +125,18 @@ export default function Index() {
         <View style={styles.resultContainer}>
           <Image source={{ uri: selectedImage }} style={styles.uploadedImage} />
           {isLoading ? (
-            <ActivityIndicator size="large" color="#FFFFFF" />
+            <ActivityIndicator style={{marginVertical:10}} size="large" color="#FFFFFF" />
           ) : instigationResult ? (
-            <View style={styles.instigationContainer}>
-              <Text style={styles.instigationText}>{instigationResult}</Text>
-              <TouchableOpacity style={styles.refreshButton} onPress={refreshInstigation}>
-              <Feather style={styles.refreshIcon} name="refresh-cw" size={24} color="black" />
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={styles.instigationContainer} onPress={copyToClipboard}>
 
+              <Text style={styles.instigationText}>{instigationResult}</Text>
+              <View style={styles.copyButton} >
+                <Icon name="copy" size={12} color="gray" />
+              </View>
+              <TouchableOpacity style={styles.refreshButton} onPress={refreshInstigation}>
+                <Feather style={styles.refreshIcon} name="refresh-cw" size={24} color="black" />
+              </TouchableOpacity>
+           </TouchableOpacity>
           ) : null}
         </View>
       ) : (
@@ -135,11 +144,12 @@ export default function Index() {
       )}
 
       <TouchableOpacity style={styles.uploadButton} onPress={pickImage} disabled={isLoading}>
-        <Text style={styles.uploadButtonText}>{isLoading ? "Processing..." : (selectedImage ? "New Conversation" : "Upload Conversation")}</Text>
+        <Text style={styles.uploadButtonText}>{isLoading ? "Instigating...😏🍿" : (selectedImage ? "New Conversation" : "Upload Conversation")}</Text>
       </TouchableOpacity>
     </LinearGradient>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -244,18 +254,36 @@ const styles = StyleSheet.create({
   },
   instigationText: {
     color: 'black',
-    fontSize: 18,
-    textAlign: 'center',
+    fontSize: 14,
+    textAlign: 'left',
     padding: 10,
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
   },
   instigationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    width: width * 0.7,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
+    justifyContent: 'center',
+    width: width * 0.8,
+    backgroundColor: 'white', // Fun, vibrant pink background
+    borderRadius: 30, // More rounded for a playful look
     marginVertical: 20,
-    paddingHorizontal: 15,
+    padding: 10, 
+    paddingBottom: 12, // Increase padding for more space around text
+    shadowColor: '#FF1493', // Fun shadow color
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.4,
+    shadowRadius: 15,
+    elevation: 10, // Strong shadow for depth
+    position: 'relative',
+  },
+  copyButton: {
+    position: 'absolute', // To position it absolutely inside the container
+    bottom: 2, // Position 10 units from the bottom
+    right: 8, // Position 10 units from the right
+    padding: 10, // Optional: padding for better touch area
+    borderRadius: 8, // Optional: rounded corners for a more aesthetic look
+    flexDirection: 'row', // To align icon and text horizontally
+    alignItems: 'center',
   },
 });
