@@ -104,7 +104,9 @@ export default function Index() {
       setInstigationResult(instigation);
     } else if (error) {
       Alert.alert("Error", error);
-  }
+    }
+  };
+
   const copyToClipboard = () => {
     if (instigationResult) {
       Clipboard.setString(instigationResult);
@@ -127,16 +129,19 @@ export default function Index() {
           {isLoading ? (
             <ActivityIndicator style={{marginVertical:10}} size="large" color="#FFFFFF" />
           ) : instigationResult ? (
+            <View>
+              <TouchableOpacity style={styles.refreshButton} onPress={refreshInstigation}>
+                <Feather style={styles.refreshIcon} name="refresh-cw" size={24} color="black" />
+              </TouchableOpacity>
             <TouchableOpacity style={styles.instigationContainer} onPress={copyToClipboard}>
 
               <Text style={styles.instigationText}>{instigationResult}</Text>
               <View style={styles.copyButton} >
                 <Icon name="copy" size={12} color="gray" />
               </View>
-              <TouchableOpacity style={styles.refreshButton} onPress={refreshInstigation}>
-                <Feather style={styles.refreshIcon} name="refresh-cw" size={24} color="black" />
-              </TouchableOpacity>
+              
            </TouchableOpacity>
+           </View>
           ) : null}
         </View>
       ) : (
@@ -155,7 +160,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 10,
+    paddingTop: 0,
   },
   topSection: {
     marginBottom: 20,
@@ -248,9 +253,11 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   refreshButton: {
-    backgroundColor: '#000000',
     padding: 10,
     borderRadius: 10,
+    position: 'absolute',
+    top: -40,  // Adjust to move the button higher above the container
+    right: 10, // Adjust to position it to the right
   },
   instigationText: {
     color: 'black',
@@ -286,4 +293,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row', // To align icon and text horizontally
     alignItems: 'center',
   },
+
 });
+
