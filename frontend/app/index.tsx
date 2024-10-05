@@ -64,9 +64,11 @@ export default function Index() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [instigationResult, setInstigationResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInstigationRefreshing, setisInstigationRefreshing] = useState(false);
 
   const [fontsLoaded] = useFonts({
     'Jua': require('../assets/fonts/Jua-Regular.ttf'),
+    Albert: require('../assets/fonts/AlbertSans-Regular.ttf')
   });
 
   if (!fontsLoaded) {
@@ -99,9 +101,11 @@ export default function Index() {
   };
 
   const refreshInstigation = async () => {
+    setisInstigationRefreshing(true);
     const { instigation, error } = await fetchInstigation(selectedImage);
     if (instigation) {
       setInstigationResult(instigation);
+      setisInstigationRefreshing(false);
     } else if (error) {
       Alert.alert("Error", error);
     }
@@ -134,8 +138,9 @@ export default function Index() {
                 <Feather style={styles.refreshIcon} name="refresh-cw" size={24} color="black" />
               </TouchableOpacity>
             <TouchableOpacity style={styles.instigationContainer} onPress={copyToClipboard}>
-
-              <Text style={styles.instigationText}>{instigationResult}</Text>
+              {isInstigationRefreshing ? (<ActivityIndicator style={{marginVertical:10}} size="large" color="gray" />) 
+              : (<Text style={styles.instigationText}>{instigationResult}</Text>)}
+      
               <View style={styles.copyButton} >
                 <Icon name="copy" size={12} color="gray" />
               </View>
@@ -241,7 +246,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 25,
     textAlign: 'center',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   resultContainer: {
     alignItems: 'center',
@@ -261,11 +266,13 @@ const styles = StyleSheet.create({
   },
   instigationText: {
     color: 'black',
-    fontSize: 14,
+    fontSize: 15,
     textAlign: 'left',
     padding: 10,
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
+    fontFamily: 'Albert',
+    fontWeight:'bold',
   },
   instigationContainer: {
     flexDirection: 'row',

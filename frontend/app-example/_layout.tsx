@@ -15,6 +15,7 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     Jua: require('../assets/fonts/Jua-Regular.ttf'), // Add this line
+    Albert: require('../assets/fonts/AlbertSans-Regular.ttf')
   });
 
   useEffect(() => {
