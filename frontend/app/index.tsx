@@ -120,7 +120,7 @@ export default function Index() {
       )}
 
       <TouchableOpacity style={styles.uploadButton} onPress={pickImage} disabled={isLoading}>
-        <Text style={styles.uploadButtonText}>{isLoading ? "Processing..." : "Upload Image"}</Text>
+        <Text style={styles.uploadButtonText}>{isLoading ? "Processing..." : "Upload Conversation"}</Text>
       </TouchableOpacity>
     </LinearGradient>
   );
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 60,
+    paddingTop: 10,
   },
   topSection: {
     marginBottom: 20,
@@ -191,16 +191,19 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 16,
     textAlign: 'center',
+    fontWeight:'bold',
   },
   uploadedImage: {
-    width: width * 0.8,
-    height: width * 0.8,
-    borderRadius: 45,
+    width: '50%',
+    borderRadius: 30,
+    height: width,
     resizeMode: 'contain',
+    backgroundColor:'black',
   },
   uploadButton: {
     backgroundColor: '#000000',
-    padding: 15,
+    padding: 20,
+    paddingHorizontal: 40,
     borderRadius: 25,
     marginBottom: 150,
   },
@@ -208,11 +211,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 25,
     textAlign: 'center',
+    fontWeight:'bold'
   },
   resultContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+    height:'auto',
   },
   instigationText: {
     color: 'black',
