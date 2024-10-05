@@ -3,6 +3,8 @@ import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity, ActivityIn
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import * as ImagePicker from 'expo-image-picker';
+import Feather from 'react-native-vector-icons/Feather';
+
 
 const { width } = Dimensions.get('window');
 const API_ADDR = "http://0.0.0.0:8080";
@@ -95,6 +97,15 @@ export default function Index() {
     }
   };
 
+  const refreshInstigation = async () => {
+    const { instigation, error } = await fetchInstigation(selectedImage);
+    if (instigation) {
+      setInstigationResult(instigation);
+    } else if (error) {
+      Alert.alert("Error", error);
+    }
+  };
+
   return (
     <LinearGradient
       colors={['#DC2913', '#DC5913']}
@@ -112,7 +123,11 @@ export default function Index() {
           ) : instigationResult ? (
             <View style={styles.instigationContainer}>
               <Text style={styles.instigationText}>{instigationResult}</Text>
+              <TouchableOpacity style={styles.refreshButton} onPress={refreshInstigation}>
+              <Feather style={styles.refreshIcon} name="refresh-cw" size={24} color="black" />
+              </TouchableOpacity>
             </View>
+
           ) : null}
         </View>
       ) : (
@@ -120,7 +135,7 @@ export default function Index() {
       )}
 
       <TouchableOpacity style={styles.uploadButton} onPress={pickImage} disabled={isLoading}>
-        <Text style={styles.uploadButtonText}>{isLoading ? "Processing..." : "Upload Conversation"}</Text>
+        <Text style={styles.uploadButtonText}>{isLoading ? "Processing..." : (selectedImage ? "New Conversation" : "Upload Conversation")}</Text>
       </TouchableOpacity>
     </LinearGradient>
   );
@@ -191,14 +206,14 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 16,
     textAlign: 'center',
-    fontWeight:'bold',
+    fontWeight: 'bold',
   },
   uploadedImage: {
     width: '50%',
     borderRadius: 30,
     height: width,
     resizeMode: 'contain',
-    backgroundColor:'black',
+    backgroundColor: 'black',
   },
   uploadButton: {
     backgroundColor: '#000000',
@@ -211,27 +226,36 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 25,
     textAlign: 'center',
-    fontWeight:'bold'
+    fontWeight: 'bold'
   },
   resultContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    height:'auto',
+    height: 'auto',
+  },
+  refreshIcon: {
+    color: 'white',
+  },
+  refreshButton: {
+    backgroundColor: '#000000',
+    padding: 10,
+    borderRadius: 10,
   },
   instigationText: {
     color: 'black',
     fontSize: 18,
     textAlign: 'center',
     padding: 10,
-
   },
   instigationContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    width: width * 0.8,
+    justifyContent: 'space-between',
+    width: width * 0.7,
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
     marginVertical: 20,
+    paddingHorizontal: 15,
   },
 });
